@@ -1,0 +1,95 @@
+## Laboratorio No. 1
+
+##### Francisco Javier Hernández Azurdia
+
+##### Carné 999012591
+
+1.  Vectores y Matrices
+
+```{r}
+S1_vector <- c(50.4,62.3,92.1,77.6,TRUE)
+S2_vetor <- c(41.7,87.9,75.3,72.4, FALSE)
+S3_vector <- c(30.3, 67.8, 69.3, 71.2, FALSE)
+S4_vector <- c(65.4,85.1,92.3,96.8,TRUE)
+S5_vector <- c(70.4,88.2,95.2,90.7, TRUE)
+
+students_vector <- c(S1_vector, S2_vetor, S3_vector, S4_vector, S5_vector)
+
+students_matrix <- matrix(students_vector, byrow = TRUE, nrow = 5)
+print(students_matrix)
+```
+
+2.  Nombrado de una matriz
+
+```{r}
+name_students <- c("Lily Brown", "Davis Moore", "Susan Taylor", "Mike Jones", "Tom Hill")
+name_courses_legal_age <- c("TIC", "Accounting", "Psychology", "Ethics", "Legal_age")
+
+colnames(students_matrix) <- name_courses_legal_age
+rownames(students_matrix) <- name_students
+print(students_matrix)
+```
+
+3.  rowSums, cbind
+
+```{r}
+total_grade_student <- rowSums(students_matrix[,1:4])
+results_students <- cbind(students_matrix, total_grade_student)
+print(results_students)
+```
+
+4.  Seleccionando elementos de una matriz
+
+```{r}
+selected_elements <- c(results_students[1,], results_students[3,], results_students[5,], results_students[,2], results_students[,4])
+print(selected_elements)
+```
+
+5.  Data frames
+
+```{r}
+students_grades_df <- data.frame(results_students)
+print(students_grades_df)
+subset(students_grades_df, subset=Accounting>80 & Legal_age==TRUE)
+```
+
+6.  Funciones, Condicionales y Bucles
+
+```{r}
+students_projections <- function(matrix1){
+  count_columns <- ncol(matrix1)
+  count_rows <- nrow(matrix1)
+  for(i in 1:count_rows){
+    for(j in 3:count_columns-2){
+      if(matrix1[i,j]<=45){
+        matrix1[i,j] <- "Student at risk"
+      } else if(matrix1[i,j]>45 && matrix1[i,j]<61){
+        matrix1[i,j] <- "Student may be approved"
+      } else{
+        matrix1[i,j] <- "Student approved"
+      }
+  }
+  }
+  print(matrix1)
+}
+
+students_projections(results_students)
+```
+
+7.  Data frames y lapply
+
+```{r}
+index_education <- function(grade){
+  index <- (1+(grade/100))/2
+}
+
+all_students_grade <- students_grades_df[1:5,1:4]
+lapply(all_students_grade, index_education)
+```
+
+8.  Math utilities
+
+```{r}
+score_mean <- colMeans(students_grades_df[,1:4])
+print(score_mean)
+```
